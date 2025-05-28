@@ -18,7 +18,6 @@ class TestAdCreation:
         driver.find_element(*AD_DESC_INPUT).send_keys("Test Description")
         driver.find_element(*AD_PRICE_INPUT).send_keys("1000")
         driver.find_element(*AD_CATEGORY_DROPDOWN).click()
-        # Выберите категорию (например, первый элемент)
         driver.find_element_by_xpath("//option[2]").click()
         driver.find_element(*AD_CITY_DROPDOWN).click()
         driver.find_element_by_xpath("//option[2]").click()
