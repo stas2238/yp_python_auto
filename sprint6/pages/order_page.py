@@ -1,32 +1,27 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from .base_page import BasePage
 from .locators import OrderPageLocators
 
-class OrderPage:
-    def __init__(self, driver):
-        self.driver = driver
+class OrderPage(BasePage):
+    def wait_for_order_page(self):
+        self.wait_for_element_visible(OrderPageLocators.FIRST_NAME, timeout=5)
 
     def fill_order_form(self, data):
-        self.driver.find_element(*OrderPageLocators.FIRST_NAME).send_keys(data["first_name"])
-        self.driver.find_element(*OrderPageLocators.LAST_NAME).send_keys(data["last_name"])
-        self.driver.find_element(*OrderPageLocators.ADDRESS).send_keys(data["address"])
-        self.driver.find_element(*OrderPageLocators.METRO_STATION).send_keys(data["metro"])
-        self.driver.find_element(*OrderPageLocators.PHONE).send_keys(data["phone"])
-        self.driver.find_element(*OrderPageLocators.NEXT_BUTTON).click()
-
-        self.driver.find_element(*OrderPageLocators.DATE).send_keys(data["date"])
-        self.driver.find_element(*OrderPageLocators.RENT_DAYS).click()
-        self.driver.find_element(*OrderPageLocators.RENT_DAYS_OPTION).click()
+        self.fill(OrderPageLocators.FIRST_NAME, data["first_name"])
+        self.fill(OrderPageLocators.LAST_NAME, data["last_name"])
+        self.fill(OrderPageLocators.ADDRESS, data["address"])
+        self.fill(OrderPageLocators.METRO_STATION, data["metro"])
+        self.fill(OrderPageLocators.PHONE, data["phone"])
+        self.click(OrderPageLocators.NEXT_BUTTON)
+        self.fill(OrderPageLocators.DATE, data["date"])
+        self.click(OrderPageLocators.RENT_DAYS)
+        self.click(OrderPageLocators.RENT_DAYS_OPTION)
         if data.get("color") == "black":
-            self.driver.find_element(*OrderPageLocators.COLOR_BLACK).click()
+            self.click(OrderPageLocators.COLOR_BLACK)
         elif data.get("color") == "grey":
-            self.driver.find_element(*OrderPageLocators.COLOR_GREY).click()
-        self.driver.find_element(*OrderPageLocators.COMMENT).send_keys(data.get("comment", ""))
-        self.driver.find_element(*OrderPageLocators.ORDER_BUTTON).click()
-        self.driver.find_element(*OrderPageLocators.CONFIRM_YES_BUTTON).click()
+            self.click(OrderPageLocators.COLOR_GREY)
+        self.fill(OrderPageLocators.COMMENT, data.get("comment", ""))
+        self.click(OrderPageLocators.ORDER_BUTTON)
+        self.click(OrderPageLocators.CONFIRM_YES_BUTTON)
 
-    def is_order_successful(self):
-        return WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located(OrderPageLocators.SUCCESS_MODAL)
-        )
+    def wait_for_order_success_modal(self, timeout=5):
+        self.wait_for_element_visible(OrderPageLocators.SUCCESS_MODAL, timeout)

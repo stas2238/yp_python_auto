@@ -5,8 +5,8 @@ class MainPageLocators:
     BOTTOM_ORDER_BUTTON = (By.XPATH, "//button[contains(text(), 'Заказать')][2]")
     SCOOTER_LOGO = (By.CLASS_NAME, "Header_LogoScooter__3lsAR")
     YANDEX_LOGO = (By.CLASS_NAME, "Header_LogoYandex__3TSOI")
-    QUESTION = lambda qid: (By.ID, f"accordion__heading-{qid}")
-    ANSWER = lambda qid: (By.ID, f"accordion__panel-{qid}")
+    QUESTION = staticmethod(lambda qid: (By.ID, f"accordion__heading-{qid}"))
+    ANSWER = staticmethod(lambda qid: (By.ID, f"accordion__panel-{qid}"))
 
 class OrderPageLocators:
     FIRST_NAME = (By.XPATH, "//input[@placeholder='* Имя']")

@@ -30,10 +30,12 @@ order_data_sets = [
 def test_order_flow(driver, button, order_data):
     main_page = MainPage(driver)
     main_page.open()
+    main_page.wait_for_load_home_page()
     if button == "top":
         main_page.click_order_button_top()
     else:
         main_page.click_order_button_bottom()
     order_page = OrderPage(driver)
+    order_page.wait_for_order_page()
     order_page.fill_order_form(order_data)
-    assert order_page.is_order_successful()
+    order_page.wait_for_order_success_modal()

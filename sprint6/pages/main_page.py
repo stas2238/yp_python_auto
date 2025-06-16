@@ -1,32 +1,38 @@
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from .base_page import BasePage
 from .locators import MainPageLocators
 
-class MainPage:
+class MainPage(BasePage):
     URL = "https://qa-scooter.praktikum-services.ru/"
 
-    def __init__(self, driver):
-        self.driver = driver
-
     def open(self):
-        self.driver.get(self.URL)
+        self.open_url(self.URL)
+
+    def wait_for_load_home_page(self):
+        self.wait_for_element_visible(MainPageLocators.SCOOTER_LOGO, timeout=5)
 
     def click_order_button_top(self):
-        self.driver.find_element(*MainPageLocators.TOP_ORDER_BUTTON).click()
+        self.click(MainPageLocators.TOP_ORDER_BUTTON)
 
     def click_order_button_bottom(self):
-        self.driver.find_element(*MainPageLocators.BOTTOM_ORDER_BUTTON).click()
+        self.click(MainPageLocators.BOTTOM_ORDER_BUTTON)
 
     def click_question(self, question_id):
-        self.driver.find_element(*MainPageLocators.QUESTION(question_id)).click()
+        self.click(MainPageLocators.QUESTION(question_id))
+
+    def wait_for_question_answer_visible(self, question_id, timeout=5):
+        self.wait_for_element_visible(MainPageLocators.ANSWER(question_id), timeout)
 
     def get_answer_text(self, question_id):
-        return WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located(MainPageLocators.ANSWER(question_id))
-        ).text
+        return self.get_text(MainPageLocators.ANSWER(question_id))
 
     def click_scooter_logo(self):
-        self.driver.find_element(*MainPageLocators.SCOOTER_LOGO).click()
+        self.click(MainPageLocators.SCOOTER_LOGO)
 
     def click_yandex_logo(self):
-        self.driver.find_element(*MainPageLocators.YANDEX_LOGO).click()
+        self.click(MainPageLocators.YANDEX_LOGO)
+
+    def wait_for_main_url(self, timeout=5):
+        self.wait_for_url(self.URL, timeout)
+
+    def is_main_url(self):
+        return self.is_url(self.URL)

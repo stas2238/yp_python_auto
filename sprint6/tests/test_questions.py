@@ -1,7 +1,6 @@
 import pytest
 from pages.main_page import MainPage
 
-# Примерные ответы, замените на актуальные с сайта
 questions_and_answers = [
     (0, "Сутки — 400 рублей. Оплата курьеру — наличными или картой."),
     (1, "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим."),
@@ -17,6 +16,8 @@ questions_and_answers = [
 def test_questions_open(driver, question_id, expected_text):
     main_page = MainPage(driver)
     main_page.open()
+    main_page.wait_for_load_home_page()
     main_page.click_question(question_id)
+    main_page.wait_for_question_answer_visible(question_id)
     answer = main_page.get_answer_text(question_id)
     assert expected_text in answer

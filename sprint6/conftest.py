@@ -6,6 +6,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 def driver():
     options = webdriver.FirefoxOptions()
     options.add_argument('--window-size=1920,1080')
+    # options.add_argument('--headless')  # Раскомментируйте для headless-режима
     driver = webdriver.Firefox(
         executable_path=GeckoDriverManager().install(),
         options=options
