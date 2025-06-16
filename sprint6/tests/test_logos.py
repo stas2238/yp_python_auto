@@ -15,4 +15,5 @@ def test_yandex_logo_redirect(driver):
     main_page.wait_for_load_home_page()
     main_page.click_yandex_logo()
     main_page.switch_to_tab(1)
-    assert "dzen.ru" in main_page.driver.current_url
+    current_url = main_page.get_current_url()
+    assert "dzen.ru" in current_url

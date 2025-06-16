@@ -40,5 +40,8 @@ class BasePage:
     def is_url(self, url):
         return self.driver.current_url == url
 
+    def get_current_url(self):
+        return self.driver.current_url
+
     def switch_to_tab(self, tab_index):
         self.driver.switch_to.window(self.driver.window_handles[tab_index])
