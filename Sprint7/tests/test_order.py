@@ -1,7 +1,12 @@
 import pytest
 import requests
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+print(sys.path)
+from Sprint7.utils.urls import ORDER_URL
 
-ORDER_URL = "https://qa-scooter.praktikum-services.ru/api/v1/orders"
+
 
 class TestOrderCreation:
     @pytest.mark.parametrize("colors", [
